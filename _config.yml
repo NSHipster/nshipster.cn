@@ -14,6 +14,7 @@ include:
   - .well-known
 
 exclude:
+  - LICENSE*
   - articles/
   - books/
   - training/

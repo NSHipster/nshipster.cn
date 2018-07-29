@@ -525,7 +525,7 @@ input[type="submit"] {
     font-family: 'NSHipster Icons';
     font-style: normal;
     font-weight: 700;
-    font-display: optional;
+    font-display: swap;
     src: url(font_path("nshipster.woff")) format("woff"), url(font_path("nshipster.ttf")) format("truetype"), url(font_path("nshipster.svg")) format("svg");
 }
 

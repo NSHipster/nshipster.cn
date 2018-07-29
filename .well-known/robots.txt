@@ -1,2 +1,10 @@
+---
+layout: null
+permalink: /robots.txt
+---
+
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /swift-documentation-example/
+
+Sitemap: {{ site.url }}/sitemap.xml

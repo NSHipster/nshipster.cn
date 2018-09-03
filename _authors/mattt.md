@@ -14,4 +14,5 @@ image: mattt.jpg
 is a writer and developer in Portland, Oregon.
 He is the founder of NSHipster and [Flight School](https://flight.school),
 and the creator of several open source libraries,
-including AFNetworking and Alamofire.
+including [AFNetworking](https://github.com/afnetworking/afnetworking)
+and [Alamofire](https://github.com/alamofire/alamofire).

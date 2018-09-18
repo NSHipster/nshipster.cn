@@ -19,13 +19,34 @@ layout: default
       {% else %}
         <a class="author" href="{{ author.url }}">{{ author.name }}</a>撰写、
       {% endif %}
-      {% if translator %}
+      {% if page.translators %}
+        {% for tran in page.translators %}
+            {% assign translator = site.translators | where:"name",tran | first %}
+            {% if forloop.last %}和{% else %}{% unless forloop.first %}、{% endunless %}{% endif %}
+            {% if translator %}
+              <a class="author" href="{{ translator.url }}">{{ translator.name }}</a>
+            {% else %}
+              {{ tran }}
+            {% endif %}
+        {% endfor %}翻译、
+      {% elsif translator %}
         <a class="author" href="{{ translator.url }}">{{ translator.name }}</a>翻译、
       {% else if page.translator %}
-          {{ page.translator }}翻译、
+        {{ page.translator }}翻译、
       {% endif %}
 
-      发布于<time datetime="{{ page.date }}" pubdate="{{ page.date }}" itemprop="datePublished">{{ page.date | date:"%Y年%-m月%-d日" }}</time></h2>
+      {% if page.last_revised_on %}
+        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished" hidden aria-hidden="true">{{ page.date | date:"%Y年%-m月%-d日" }}</time>
+        <time datetime="{{ page.last_revised_on | date_to_xmlschema }}" itemprop="dateModified">{{ page.last_revised_on | date:"%Y年%-m月%-d日" }}</time>
+      {% else %}
+        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date:"%Y年%-m月%-d日" }}</time>
+        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="dateModified" hidden aria-hidden="true">{{ page.date | date:"%Y年%-m月%-d日" }}</time>
+      {% endif %}
+
+      {% if page.revisions %}
+      (<a href="#revisions">有改动</a>)
+      {% endif %}
+    </h2>
   </header>
 
   <div class="content" itemprop="articleBody" data-swiftype-index="true">
@@ -33,9 +54,22 @@ layout: default
   </div>
 
   <footer role="complementary">
+    {% if page.revisions or page.status %}
+    <section id="revisions">
+      <small>NSMutableHipster</small>
+
+      <dl>
+      {% for revision in page.revisions %}
+        <dt>{{ revision[0] | ordinalize }}</dt>
+        <dd>{{ revision[1] | markdownify }}</dd>
+      {% endfor %}
+      </dl>
+    </section>
+    {% endif %}
+
     <section id="attribution">
       {% include contributor.html role="author" %}
-      {% if page.translator %}
+      {% if page.translator or page.translators %}
         {% include contributor.html role="translator" %}
       {% endif %}
     </section>
